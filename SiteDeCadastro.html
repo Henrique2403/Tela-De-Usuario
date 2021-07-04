@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PicPay</title>
+    <style>
+        body {
+            background: rgb(25, 209, 49);
+            color: white;
+            font: normal 17pt Arial;
+        }
+        img{
+            width: 30%;
+            float: right;
+            top: 10px;
+        }
+        #informacoes{
+            width: 70%;
+            padding-top: 52px;
+        }
+        #imagem{
+            width: 50%;
+            position: absolute;
+            right : 0px;
+            top : 0px;
+        }
+        table, th, td{
+            border: 1px solid white;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body>
+    <section>
+        <div id= "informacoes">
+            <h2>Programa Jovem Aprendiz 2021</h2>
+            Nome : <br><input type="text" name="txtnome" id="txtnome"><br>
+            Sobrenome : <br><input type="text" name="txtsn" id="txtsn"><br>
+            Data de Nascimento : <br><input type="date" nome="txtdn" id="txtdn"><br>
+            <br><input type="button" value="Cadastrar" onclick="cadastro()">
+            <table style = "width :100%" id="tabelaInfo">
+               
+            </table>
+            <div id="cadastrar">
+            </div>
+
+        </div>
+        <div id="imagem">
+            <img src="logopicpaybranca.png" alt="">
+        </div>
+    </section>
+
+
+    <script>
+        function cadastro() {
+            var nome = document.querySelector('input#txtnome')
+            var sobrenome = document.querySelector('input#txtsn')
+            var dataNascimento = document.querySelector('input#txtdn')
+            var idade = calculateAge(dataNascimento)
+            var isMaiorDeIdade = validateIsMaiorDeIdade(idade)
+            tabelaInfo.innerHTML = createTableView(nome, sobrenome,dataNascimento, idade, isMaiorDeIdade)    
+        }
+        function calculateAge(dataNascimento) {
+            var yearsdiff = (Date.now() - new Date(dataNascimento.value).getTime()) / 1000
+            yearsdiff /= (60 * 60 * 24)
+            return Math.abs(Math.round(yearsdiff / 365.35))
+
+        }
+        function validateIsMaiorDeIdade(idade) {
+            if (idade > 18) {
+                return "Maior de idade"
+            }
+            return "Menor de idade"
+        }
+        function createTableView(nome, sobrenome, dataNascimento, idade, isMaiorDeIdade){
+            return `<th>Nome</th><th>Sobrenome</th><th>Data de Nascimento</th><th>Idade</th><th>Maioridade</th>
+            <tr>
+            <td>  ${nome.value}</td>
+            <td>  ${sobrenome.value}</td>
+            <td>  ${dataNascimento.value}</td>
+            <td>  ${idade} anos</td>
+            <td>  ${isMaiorDeIdade}</td>
+            </tr>`
+        }
+    </script>
+
+</body>
+
+</html>
